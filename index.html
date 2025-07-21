@@ -1,0 +1,172 @@
+<!-- 
+    To-do:
+    - The skills and experience sections may be unnecessary as those are on the resume
+    - Add pictures of some of the games I made
+    - Remove unnecessary javascript scripts
+    - Make header buttons look better
+    - Make a back to top button which is an up arrow icon
+    - Make a fun gimic on the website to show of programming skill
+        - Color chooser
+        - Clicking on my picture causes it to fall down and reveal some funny gif...
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrew Suyer</title>
+    <link href="Style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- <div class="color-chooser">
+        <button class="color-button red" onclick="changeColor('red')"></button>
+        <button class="color-button yellow" onclick="changeColor('yellow')"></button>
+        <button class="color-button green" onclick="changeColor('green')"></button>
+        <button class="color-button blue" onclick="changeColor('blue')"></button>
+        <button class="color-button purple" onclick="changeColor('purple')"></button>
+    </div> -->
+
+    <header id = header>
+        <h1>Andrew Suyer</h1>
+        <img src="Images/AndrewPicture.JPG" alt="Andrew Suyer">
+
+        <button class="button-about-me" onclick="aboutme.scrollIntoView({behavior: 'smooth'})">About me</button>
+        <button class="button-skills" onclick="skills.scrollIntoView({behavior: 'smooth'})">Skills</button>
+        <button class="button-experience" onclick="experience.scrollIntoView({behavior: 'smooth'})">Experience</button>
+        <button class="button-my-projects" onclick="myprojects.scrollIntoView({behavior: 'smooth'})">My projects</button>
+        <button class="button-resume" onclick="resume.scrollIntoView({behavior: 'smooth'})">My Resume</button>
+
+    </header>
+
+    <div class="section about-me" id = aboutme>
+        <h2>About Me</h2>
+        <p>I am a senior in high school who has a strong interest in computer science,
+            mathematics, and creating video games. My academics are characterized by top
+            grades and a high class rank, which result from my commitment to working hard
+            on everything I do. I have always thrived in independent environments where I
+            can get lost in thought. 
+        </p>
+        <p>
+            My dedication to computer science and mathematics has led me to pursue advanced
+            coursework in those subjects, resulting in my completion of the highest-level
+            classes in both of those subjects that my high school has to offer. This academic 
+            accomplishment has led me to my current senior year, where I have chosen to
+            supplement my high school curriculum with college-level courses at a local 
+            community college, which will give me a head start when I go to a 4-year college.
+        </p>
+        <p>
+            My passion for making video games is rooted in my fascination with computer science
+            and problem solving. Throughout my junior and senior years of high school, I have 
+            created many small-scale games using some bare-bones libraries in Java and C++.
+            I have showcased some of my best work in the 
+            <a href="#myprojects">My Projects</a>
+            section. 
+        </p>
+        <p>
+            While I am introverted by nature, I know the power of collaboration, and I strive to 
+            be a good work partner even if I have to step outside my comfort zone. My kindness
+            and commitment make me a reliable and efficient member of a team. 
+        </p>
+        <p>
+            In summary, I am a motivated, high-achieving high school senior with a genuine passion
+            for computer science, mathematics, and video game design. My dedication to those fields
+            and my independent nature make me a valuable member of any institution or organization. 
+            I am excited to continue my academic and professional journey, where I can pursue 
+            the things that make me and many others happy. 
+        </p>
+    </div>
+
+    <div class="section skills" id = skills>
+        <h2>Skills</h2>
+        <ul>
+            <!-- Calculus, CS (Java, C++), Rubik's cube, Teaching/Tutoring young students -->
+            <li>Advanced calculus: I've completed college level introductory calculus classes in 
+                high school, college, and at a private math school.
+            </li>
+            <li>Computer programming: Mainly object-oriented design using Java and C++. I have
+                some experience coding in JavaScript and HTML. 
+            </li>
+            <li>
+                Speedcubing: I have practiced speed solving the Rubik's cube for many years as a hobby
+                and currently have a sub 20-second average. 
+            </li>
+        </ul>
+    </div>
+
+    <div class="section experience" id = experience>
+        <h2>Experience</h2>
+        <dl>
+            <dt>Tutor: Math Altitude School of Mathematics - Sep. 2021 to present</dt>
+            <dd>- Tutored math to elementary and middle school students</dd>
+        </dl>
+    </div>
+
+    <div class="section my-projects" id= myprojects>
+        <h2>My Projects</h2>
+        <!-- Add your project images and descriptions here -->
+        <p>
+            I have worked on a lot of independent projects, sometimes for a school assignment,
+            and other times just for fun. This website happens to be one of them! If you want 
+            to see the source code for some of my coding projects or want to play some of my 
+            games on your own computer, check out
+            <a href="https://github.com/AndrewSuyer?tab=repositories" target="_blank">my GitHub page</a>.
+        </p>
+
+        <div class="section java-platform-runner" id="java-platform-runner">
+            <h3>Java Platform Runner</h3>
+            <!-- Add images -->
+            <p>
+                I made this game for my final project in AP Computer Science A, which I took in my junior 
+                year. It was quite a big project, probably bigger than what we were expected to do. It was
+                one of my first experiences in making GUI's and windows. Looking back at it, I realize that 
+                there is a lot that I could have done better when It came to how I loaded textures and images.
+                If you tried to download this game and play it yourself, you would probably see nothing because
+                all the images are stored somewhere on my hard drive and not in the project directory.
+            </p>
+            <p>
+                Perhaps the most interesting thing about the development of this game is how I designed the levels.
+                If you looked into the code, you would notice every block of every level is placed manually. I 
+                obviously didn't write the thousands of lines of code manually. Instead, I used google sheets to 
+                plan out each level, then I used a script to generate the code. Each block in the game is represented 
+                by a color in google sheets. When creating a level, I would draw it out (literally) in google sheets 
+                using the colors I defined.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="section contact-me" id= contact>
+        <h2>Contact Me</h2>
+        <ul>
+            <li>Email: andrew.suyer@icloud.com</li>
+            <li>Phone: 508-868-2606</li>
+            <li>Address: Worcester MA, 01602</li>
+        </ul>
+
+        <div class="Resume download-button" id="resume">
+            <a href="your-resume.pdf" download>AndrewSuyerResume.pdf</a>
+        </div>
+        
+    </div>
+
+
+    <script>
+        function scrollToResume() {
+            document.getElementById('resume').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // function changeColor(color) {
+        //     document.documentElement.style.setProperty('--section-bg-color', color);
+        // }
+
+        function scrollTo(sectionId) {
+            document.getElementById({sectionId}).scrollIntoView({ behavior: 'smooth'})
+        }
+    </script>
+</body>
+</html>
