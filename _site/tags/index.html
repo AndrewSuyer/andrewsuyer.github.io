@@ -9,13 +9,13 @@
 
   
 
-  <title>Andrew Suyer</title>
+  <title>Tag Index</title>
 
   
   <meta name="author" content="Andrew Suyer">
   
 
-  <meta name="description" content="# Coming soon ...">
+  <meta name="description" content="{% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:&apos;,&apos; | sort -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- endfor -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- for post in site.tags[tag] -%} {{- post.title | strip_html -}} {{-...">
 
   
 
@@ -74,8 +74,8 @@
 
   
   <meta property="og:site_name" content="Andrew Suyer">
-  <meta property="og:title" content="Andrew Suyer">
-  <meta property="og:description" content="# Coming soon ...">
+  <meta property="og:title" content="Tag Index">
+  <meta property="og:description" content="{% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:&apos;,&apos; | sort -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- endfor -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- for post in site.tags[tag] -%} {{- post.title | strip_html -}} {{-...">
 
   
   <meta property="og:image" content="http://localhost:4000/assets/img/AndrewPicture.JPG">
@@ -83,8 +83,8 @@
 
   
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://localhost:4000/">
-  <link rel="canonical" href="http://localhost:4000/">
+  <meta property="og:url" content="http://localhost:4000/tags/">
+  <link rel="canonical" href="http://localhost:4000/tags/">
   
 
   
@@ -93,8 +93,8 @@
   <meta name="twitter:site" content="@">
   <meta name="twitter:creator" content="@">
 
-  <meta property="twitter:title" content="Andrew Suyer">
-  <meta property="twitter:description" content="# Coming soon ...">
+  <meta property="twitter:title" content="Tag Index">
+  <meta property="twitter:description" content="{% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:&apos;,&apos; | sort -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- endfor -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- for post in site.tags[tag] -%} {{- post.title | strip_html -}} {{-...">
 
   
   <meta name="twitter:image" content="http://localhost:4000/assets/img/AndrewPicture.JPG">
@@ -228,7 +228,7 @@
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
         <div class="page-heading">
-          <h1>Andrew Suyer</h1>
+          <h1>Tag Index</h1>
           
 
           
@@ -248,18 +248,7 @@
     <div class=" col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ">
       
 
-      <h1 id="coming-soon-">Coming soon …</h1>
-
-
-
-
-
-<!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
-<ul class="posts-list list-unstyled" role="list">
-  
-</ul>
-
-
+      <div id="full-tags-list"></div>
 
 
       
