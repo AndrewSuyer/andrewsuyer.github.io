@@ -1,0 +1,54 @@
+/* Color theme for the entire website */
+header.site-header {
+  background-color: #333333;
+  .site-title {
+    color: #fafafa;
+  }
+  .page-link {
+    color: #fafafa;
+  }
+}
+
+footer.site-footer {
+  background-color: #333333;
+  .footer-heading {
+    color: #fafafa
+  }
+  .footer-col span {
+    color: #2a7ae2;
+  }
+}
+
+main.page-content {
+  background-color: #f0ffe0;
+}
+
+
+/* Part of the footer where GitHub and LinkedIn links are */
+.footer-col.footer-col-2 {
+  width: 50%;
+}
+
+
+/* Hero section on home page */
+.hero-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.hero-image {
+  width: 150px;
+  height: auto;
+  border-radius: 50%; /* makes it a circle */
+  border: 3px solid #333;
+}
+
+.hero-name {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+

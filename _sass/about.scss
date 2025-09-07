@@ -1,0 +1,52 @@
+/* Make main div have this class to apply this style */
+.page-container {
+  display: flex;
+  align-items: flex-start;
+  // max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+  // font-family: Source Code Pro
+}
+
+.page-container main {
+    padding-right: 1rem;
+}
+
+#toc {
+  max-width: 30%;
+  flex-shrink: 0;
+  border-left: 1px solid #000;
+  padding-left: 1rem;
+
+  /* This keeps it visible as you scroll */
+  position: sticky;
+  top: 1rem; /* distance from top before it stops */
+  height: max-content;
+  /* background: #fafafa; */
+}
+
+#toc h2 {
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+#toc ul {
+  list-style: none;
+  padding-left: 15px;
+  margin-left: 0px;
+}
+
+#toc li {
+  margin: 0.25rem 0;
+}
+
+#toc a {
+  text-decoration: none;
+  color: #0077cc;
+}
+
+#toc a:hover {
+  text-decoration: underline;
+}
+
+
