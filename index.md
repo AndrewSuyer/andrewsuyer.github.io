@@ -11,7 +11,7 @@ This website is still in early development. I'll be updating it soon!
 
 - [About Me](/about/)
 - [Project showcase](/projects/)
-- [Resume](/resume/)
+- [Resume](/resume.html)
 
 
 
