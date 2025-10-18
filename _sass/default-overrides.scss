@@ -23,6 +23,11 @@ main.page-content {
   background-color: #f0ffe0;
 }
 
+/* Set max content width of all webpages */
+.wrapper {
+  max-width: 1000px;
+}
+
 
 /* Part of the footer where GitHub and LinkedIn links are */
 .footer-col.footer-col-2 {

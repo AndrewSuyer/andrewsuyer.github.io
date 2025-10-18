@@ -1,5 +1,5 @@
 ---
-layout: about2
+layout: with-toc
 title: About
 permalink: /about/
 ---

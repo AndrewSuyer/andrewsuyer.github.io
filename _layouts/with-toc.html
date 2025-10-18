@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<div class="page-container">
+    <main>
+        {{ content }}
+    </main>
+    <div id="toc">
+        <h2>Contents</h2>
+        <!-- Pass h_min=2 so h1 headings in the markdown files (i.e., `#` headings) do not
+            appear in the table of contents  -->
+        {% include toc.html html=content h_min=2 %}
+    </div>
+</div>
+

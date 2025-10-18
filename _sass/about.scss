@@ -50,3 +50,73 @@
 }
 
 
+/* Dropdown navigation styles */
+.navbar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-item {
+  position: relative;
+}
+
+/* Add spacing between navigation items */
+.navbar .nav-item {
+  margin-right: 24px; /* Adjust as needed */
+}
+
+/* Remove margin from the last item */
+.navbar .nav-item:last-child {
+  margin-right: 0;
+}
+
+/* Optional: Add padding to links for better click area */
+// .navbar .page-link {
+//   padding: 8px 0;
+  // display: inline-block;
+// }
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  background: #333333e3;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  // box-shadow: 0 2px 8px #333333;
+  z-index: 1000;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #333333;
+  text-decoration: none;
+}
+
+.dropdown-menu li a:hover {
+  background: #333333;
+}
+
+
+/* Set border and alignment for all images (excluding hero-image on home page) */
+img:not(.hero-image) {
+  display: block; 
+  border: 5px solid black; 
+  border-radius: 10px;
+  max-width: 75%;
+  // The following 2 make the image centered
+  margin-left: auto;
+  margin-right: auto
+}
+
+
