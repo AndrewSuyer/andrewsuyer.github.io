@@ -18,7 +18,7 @@ Oracle database, creating triggers and procedures in the database, and creating 
 application for interacting with the database.
 
 - [Project page](/projects/dbs-project)
-- [GitHub repository](https://github.com/asuyer-wpi/CS3431_Project/) (currently private)
+- [GitHub repository](https://github.com/asuyer-wpi/CS3431_Project/){:target="_blank"} (currently private)
 
 
 
