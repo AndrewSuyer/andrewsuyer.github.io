@@ -1,6 +1,6 @@
 ---
 layout: without-toc
-title: Projects
+title: Database Application
 ---
 
 # Building a Database Application
