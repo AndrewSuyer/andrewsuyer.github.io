@@ -44,16 +44,19 @@ services on the backend, namely:
 - **Cognito** for user identity and access management
 - **Aurora and RDS** to host the MySQL database
 
-My main contributions where 
+My main contributions had to do with user authentication. I set up an AWS Cognito User Pool to store
+user credentials and validate user credentials. I constructed an authorizer for the user pool and 
+attached it to the API Gateway endpoints, ensuring our API was inaccessible to unauthorized users.
+Additionally, I build a login page where new users can create an account and existing users can log 
+in with their username and password.
 
 
 ## See for yourself
 
 Check out the website [here](http://shop-comp-s3-bucket.s3-website-us-east-1.amazonaws.com){:target="_blank"}! 
-*Note: if the link doesn't work, it's likely we took the site down for cost reasons).*
+*Note: if the link doesn't work, it's likely we took the site down for cost reasons.*
 
 Our code is publicly viewable in the following GitHub repositories: 
 - [Frontend](https://github.com/Software-Engineering-Kappa/shopcomp-frontend)
 - [Backend](https://github.com/Software-Engineering-Kappa/shopcomp-backend)
-
 
