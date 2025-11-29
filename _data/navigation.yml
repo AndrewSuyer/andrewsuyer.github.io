@@ -6,9 +6,9 @@
   link: /projects/
   children:
     - name: Database Application
-      link: /projects/dbs-project/
+      link: /projects/dbs-project
     - name: ShopComp
-      link: /projects/shopcomp/
+      link: /projects/shopcomp
     # Add more subpages here as needed
 - name: Resume
   link: /resume.html
