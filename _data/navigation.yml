@@ -3,10 +3,10 @@
 - name: Projects
   link: /projects/
   children:
-    - name: Database Application
-      link: /projects/dbs-project
     - name: ShopComp
       link: /projects/shopcomp
+    - name: Database Application
+      link: /projects/dbs-project
     # Add more subpages here as needed
 - name: Resume
   link: /resume.html
