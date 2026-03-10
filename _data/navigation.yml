@@ -3,6 +3,8 @@
 - name: Projects
   link: /projects/
   children:
+    - name: Spreadsheet
+      link: /projects/spreadsheet
     - name: ShopComp
       link: /projects/shopcomp
     - name: Database Application

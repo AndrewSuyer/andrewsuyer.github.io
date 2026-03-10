@@ -9,6 +9,18 @@ permalink: /projects/
 This page showcases some projects I have worked on. Each project has its own webpage which
 is linked under each section.
 
+## Spreadsheet
+
+As part of an Object-Oriented Analysis and Design course, I built a spreadsheet
+application backend. I applied various object-oriented design patterns and principles
+using the Java programming language. Highlight features include expressions with cell
+references, conditional operations (`COUNTIF`, `SUMIF`, etc.), and cascading cell updates
+when referenced cells change.
+
+- [Project page](/projects/spreadsheet)
+- [GitHub repository](https://github.com/WPI-CS4233-2026C/termproject-asuyer-wpi){:target="_blank"} 
+  (currently private)
+
 
 ## ShopComp
 
