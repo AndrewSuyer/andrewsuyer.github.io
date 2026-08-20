@@ -11,7 +11,7 @@ a student.
 
 ## About Me
 
-I am a second-year Computer Science student passionate about building quality software and 
+I am a third-year Computer Science student passionate about building quality software and 
 continually expanding my technical skills. I excel at learning new technologies and thrive in 
 fast-paced environments.
 
@@ -20,9 +20,9 @@ design. I have earned Dean's List recognition each semester, and I am involved i
 groups, including the Alpine Ski Team, where I have grown as a teammate and collaborator.
 
 I have professional experience building AI agentic systems for healthcare applications. Over the 
-course of a summer internship, I contributed to a production codebase using Python, worked on team 
-projects while managing tasks with Jira, and tested new software features. My work focused on 
-delivering safe and secure agentic features for customers.
+course of two summer internships, I contributed to a production codebase using Python, worked on team 
+projects while managing tasks with Jira, researched and evaluated different agent architectures, and
+developed skills and plugins to extend agent functionality.
 
 My experiences have taught me to be adaptable and innovative, and I'm eager to continue expanding 
 my knowledge in this field. I look forward to growing alongside my peers and making meaningful 
