@@ -1,0 +1,260 @@
+<style>
+  .contact-card {
+    --cc-text: #141414;      /* main string color */
+    --cc-accent: #3b6d11;    /* bracket + caption green */
+    --cc-dim: 0.28;          /* opacity of dimmed elements on hover */
+    --cc-font-size: clamp(19px, 4.4vw, 32px);
+
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 26px 26px 30px;
+    background: transparent; /* inherits whatever page it sits on */
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .contact-card * { box-sizing: border-box; }
+
+  .cc-row-website,
+  .cc-row-handle,
+  .cc-row-email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .cc-caption {
+    position: relative;
+    font-style: italic;
+    font-size: calc(var(--cc-font-size) * 0.4);
+    color: var(--cc-accent);
+    text-decoration: none;
+    opacity: 1;
+    transition: opacity .2s ease, color .2s ease, left .2s ease;
+    cursor: pointer;
+  }
+
+  .cc-caption:hover,
+  .cc-caption:focus-visible {
+    text-decoration: underline;
+  }
+
+  .cc-caption:focus-visible {
+    outline: 2px solid var(--cc-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .cc-main {
+    margin: 24px 0 0;
+    font-weight: 800;
+    font-size: var(--cc-font-size);
+    letter-spacing: 0.22em;
+    color: var(--cc-text);
+    white-space: nowrap;
+  }
+
+  .cc-row-handle { margin-top: 22px; }
+  .cc-row-email  { margin-top: 26px; }
+
+  .cc-seg {
+    transition: opacity .2s ease, color .2s ease;
+  }
+
+  .cc-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .cc-bracket-line {
+    stroke: var(--cc-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    transition: opacity .2s ease;
+  }
+
+  /* --- hover / focus states, driven by data-active on the card --- */
+  .contact-card[data-active] .cc-caption,
+  .contact-card[data-active] .cc-seg,
+  .contact-card[data-active] .cc-bracket-line {
+    opacity: var(--cc-dim);
+  }
+
+  .contact-card[data-active="email"] .cc-caption[data-key="email"],
+  .contact-card[data-active="email"] .cc-seg,
+  .contact-card[data-active="email"] .cc-bracket-line[data-group="email"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+  .contact-card[data-active="email"] .cc-caption[data-key="email"] { color: var(--cc-accent); }
+
+  .contact-card[data-active="website"] .cc-caption[data-key="website"],
+  .contact-card[data-active="website"] .cc-seg[data-seg="handle"],
+  .contact-card[data-active="website"] .cc-seg[data-seg="suffix"],
+  .contact-card[data-active="website"] .cc-bracket-line[data-group="website"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  .contact-card[data-active="github"] .cc-caption[data-key="github"],
+  .contact-card[data-active="github"] .cc-seg[data-seg="handle"],
+  .contact-card[data-active="github"] .cc-bracket-line[data-group="handle"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  .contact-card[data-active="linkedin"] .cc-caption[data-key="linkedin"],
+  .contact-card[data-active="linkedin"] .cc-seg[data-seg="handle"],
+  .contact-card[data-active="linkedin"] .cc-bracket-line[data-group="handle"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  @media (max-width: 480px) {
+    .cc-row-handle { flex-direction: column; }
+  }
+</style>
+
+<div class="contact-card" id="contactCard">
+
+  <div class="cc-row-website">
+    <a class="cc-caption" data-key="website" href="https://andrewsuyer.com" target="_blank" rel="noopener">Website</a>
+  </div>
+
+  <p class="cc-main">
+    <span class="cc-seg" data-seg="prefix">contact@</span><span class="cc-seg" data-seg="handle">andrewsuyer</span><span class="cc-seg" data-seg="suffix">.com</span>
+  </p>
+
+  <div class="cc-row-handle">
+    <a class="cc-caption" data-key="linkedin" href="https://linkedin.com/in/andrewsuyer" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="cc-caption" data-key="github" href="https://github.com/AndrewSuyer" target="_blank" rel="noopener">GitHub</a>
+  </div>
+
+  <div class="cc-row-email">
+    <a class="cc-caption" data-key="email" href="mailto:contact@andrewsuyer.com">Email</a>
+  </div>
+
+  <svg class="cc-overlay" aria-hidden="true"></svg>
+</div>
+
+<script>
+(function () {
+  var card = document.getElementById('contactCard');
+  var svg = card.querySelector('.cc-overlay');
+  var TICK = 7;      // length of the little end-hooks
+  var ARM_PAD = 6;   // how far the outer email bracket sits from the text edges
+
+  function rectOf(sel) {
+    return card.querySelector(sel).getBoundingClientRect();
+  }
+
+  function draw() {
+    var cardRect = card.getBoundingClientRect();
+    var prefix = rectOf('[data-seg="prefix"]');
+    var handle = rectOf('[data-seg="handle"]');
+    var suffix = rectOf('[data-seg="suffix"]');
+    var main = rectOf('.cc-main');
+    var rowWebsite = rectOf('.cc-row-website');
+    var rowHandle = rectOf('.cc-row-handle');
+    var rowEmail = rectOf('.cc-row-email');
+
+    function x(v) { return v - cardRect.left; }
+    function y(v) { return v - cardRect.top; }
+
+    var wLeft = x(handle.left), wRight = x(suffix.right);
+    var hLeft = x(handle.left), hRight = x(handle.right);
+    var eLeft = x(prefix.left) - ARM_PAD, eRight = x(suffix.right) + ARM_PAD;
+
+    var websiteBarY = y(main.top) - 12;
+    var websiteStemTopY = y(rowWebsite.bottom) + 5;
+
+    var handleBarY = y(main.bottom) + 10;
+    var handleStemBotY = y(rowHandle.top) - 5;
+
+    var armTopY = y(main.bottom) + 3;
+    var armBottomY = y(rowHandle.bottom) + 12;
+    var emailStemBotY = y(rowEmail.top) - 5;
+
+    // Align "Website" above the andrewsuyer.com chunk, and LinkedIn/GitHub
+    // below the andrewsuyer chunk, instead of the row's own center.
+    var websiteCaptionEl = card.querySelector('[data-key="website"]');
+    var linkedinEl = card.querySelector('[data-key="linkedin"]');
+    var githubEl = card.querySelector('[data-key="github"]');
+
+    var websiteCenter = (handle.left + suffix.right) / 2;
+    var handleCenter = (handle.left + handle.right) / 2;
+
+    websiteCaptionEl.style.left =
+      (websiteCenter - (rowWebsite.left + rowWebsite.right) / 2) + 'px';
+
+    var handleShift = handleCenter - (rowHandle.left + rowHandle.right) / 2;
+    linkedinEl.style.left = handleShift + 'px';
+    githubEl.style.left = handleShift + 'px';
+
+    svg.setAttribute('viewBox', '0 0 ' + cardRect.width + ' ' + cardRect.height);
+
+    svg.innerHTML =
+      line('website', wLeft, websiteBarY, wRight, websiteBarY) +
+      line('website', wLeft, websiteBarY, wLeft, websiteBarY + TICK) +
+      line('website', wRight, websiteBarY, wRight, websiteBarY + TICK) +
+      line('website', mid(wLeft, wRight), websiteBarY, mid(wLeft, wRight), websiteStemTopY) +
+
+      line('handle', hLeft, handleBarY, hRight, handleBarY) +
+      line('handle', hLeft, handleBarY, hLeft, handleBarY - TICK) +
+      line('handle', hRight, handleBarY, hRight, handleBarY - TICK) +
+      line('handle', mid(hLeft, hRight), handleBarY, mid(hLeft, hRight), handleStemBotY) +
+
+      line('email', eLeft, armTopY, eLeft, armBottomY) +
+      line('email', eRight, armTopY, eRight, armBottomY) +
+      line('email', eLeft, armBottomY, eRight, armBottomY) +
+      line('email', mid(eLeft, eRight), armBottomY, mid(eLeft, eRight), emailStemBotY);
+  }
+
+  function mid(a, b) { return (a + b) / 2; }
+
+  function line(group, x1, y1, x2, y2) {
+    return '<line class="cc-bracket-line" data-group="' + group + '" ' +
+      'x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"></line>';
+  }
+
+  function setActive(key) {
+    if (key) { card.setAttribute('data-active', key); }
+    else { card.removeAttribute('data-active'); }
+  }
+
+  card.querySelectorAll('.cc-caption').forEach(function (a) {
+    var key = a.getAttribute('data-key');
+    a.addEventListener('mouseenter', function () { setActive(key); });
+    a.addEventListener('mouseleave', function () { setActive(null); });
+    a.addEventListener('focus', function () { setActive(key); });
+    a.addEventListener('blur', function () { setActive(null); });
+  });
+
+  var raf;
+  function scheduleDraw() {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', scheduleDraw);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(draw);
+  }
+  new ResizeObserver(scheduleDraw).observe(card);
+  draw();
+})();
+</script>
+<!-- ============================================================
+     END EMBEDDABLE SNIPPET
+     ============================================================ -->

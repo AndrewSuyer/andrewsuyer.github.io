@@ -19,11 +19,13 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Andrew Suyer
-email: andrew.suyer@icloud.com
+# email: andrew.suyer@icloud.com
+email: contact@andrewsuyer.com
 description:
   About Me
 baseurl: "" 
-url: "https://andrewsuyer.github.io/"
+# url: "https://andrewsuyer.github.io/"
+url: "https://andrewsuyer.com"
 
 # Socials
 github_username: AndrewSuyer

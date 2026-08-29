@@ -36,8 +36,8 @@ connections.
 - [Resume](/resume.html)
 
 
+## Contact Me
 
-
-
+{% include contact-card.html %}
 
 
