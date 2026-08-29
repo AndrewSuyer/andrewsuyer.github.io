@@ -19,10 +19,11 @@ At [WPI](https://www.wpi.edu/), I am pursuing an accelerated BS/MS degree in Com
 design. I have earned Dean's List recognition each semester, and I am involved in many student 
 groups, including the Alpine Ski Team, where I have grown as a teammate and collaborator.
 
-I have professional experience building AI agentic systems for healthcare applications. Over the 
-course of two summer internships, I contributed to a production codebase using Python, worked on team 
-projects while managing tasks with Jira, researched and evaluated different agent architectures, and
-developed skills and plugins to extend agent functionality.
+I have professional experience building AI agentic systems for healthcare applications.
+Over the course of two summer internships, I contributed to a production codebase using
+Python, worked on team projects while managing tasks with Jira, researched and evaluated
+different agent architectures, and developed skills and plugins to extend agent
+functionality.
 
 My experiences have taught me to be adaptable and innovative, and I'm eager to continue expanding 
 my knowledge in this field. I look forward to growing alongside my peers and making meaningful 
