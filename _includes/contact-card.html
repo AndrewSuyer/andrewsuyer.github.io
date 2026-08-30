@@ -31,12 +31,17 @@
   .cc-caption {
     position: relative;
     font-style: italic;
-    font-size: calc(var(--cc-font-size) * 0.4);
+    font-size: calc(var(--cc-font-size) * 0.5);
     color: var(--cc-accent);
     text-decoration: none;
     opacity: 1;
     transition: opacity .2s ease, color .2s ease, left .2s ease;
     cursor: pointer;
+  }
+
+  .cc-caption:link,
+  .cc-caption:visited {
+    color: var(--cc-accent);
   }
 
   .cc-caption:hover,
