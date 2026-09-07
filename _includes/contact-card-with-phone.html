@@ -1,0 +1,386 @@
+<style>
+  .contact-card {
+    --cc-text: #141414;      /* main string color */
+    --cc-accent: #3b6d11;    /* bracket + caption green */
+    --cc-dim: 0.28;          /* opacity of dimmed elements on hover */
+    --cc-font-size: clamp(19px, 4.4vw, 32px);
+
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 26px 26px 30px;
+    background: transparent; /* inherits whatever page it sits on */
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .contact-card * { box-sizing: border-box; }
+
+  .cc-row-website,
+  .cc-row-handle,
+  .cc-row-email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .cc-caption {
+    position: relative;
+    font-style: italic;
+    font-size: calc(var(--cc-font-size) * 0.5);
+    color: var(--cc-accent);
+    text-decoration: none;
+    opacity: 1;
+    transition: opacity .2s ease, color .2s ease, left .2s ease;
+    cursor: pointer;
+  }
+
+  .cc-caption:link,
+  .cc-caption:visited {
+    color: var(--cc-accent);
+  }
+
+  .cc-caption:hover,
+  .cc-caption:focus-visible {
+    text-decoration: underline;
+  }
+
+  .cc-caption:focus-visible {
+    outline: 2px solid var(--cc-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .cc-main {
+    margin: 24px 0 0;
+    font-weight: 800;
+    font-size: var(--cc-font-size);
+    letter-spacing: 0.22em;
+    color: var(--cc-text);
+    white-space: nowrap;
+  }
+
+  .cc-row-handle { margin-top: 22px; }
+  .cc-row-email  { margin-top: 26px; }
+
+  /* --- phone number block --- */
+  .cc-phone-block { margin-top: 34px; }
+
+  .cc-row-phone-top {
+    position: relative;
+    height: calc(var(--cc-font-size) * 0.4 * 1.3);
+  }
+  .cc-row-phone-top .cc-caption {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+  }
+
+  .cc-phone-main { margin-top: 20px; }
+
+  .cc-row-cell {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+  }
+
+  .cc-caption--static {
+    cursor: default;
+  }
+  .cc-caption--static:hover,
+  .cc-caption--static:focus-visible {
+    text-decoration: none;
+  }
+
+  .cc-seg {
+    transition: opacity .2s ease, color .2s ease;
+  }
+
+  .cc-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .cc-bracket-line {
+    stroke: var(--cc-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    transition: opacity .2s ease;
+  }
+
+  /* --- hover / focus states, driven by data-active on the card --- */
+  .contact-card[data-active] .cc-caption,
+  .contact-card[data-active] .cc-seg,
+  .contact-card[data-active] .cc-bracket-line {
+    opacity: var(--cc-dim);
+  }
+
+  .contact-card[data-active="email"] .cc-caption[data-key="email"],
+  .contact-card[data-active="email"] .cc-seg,
+  .contact-card[data-active="email"] .cc-bracket-line[data-group="email"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+  .contact-card[data-active="email"] .cc-caption[data-key="email"] { color: var(--cc-accent); }
+
+  .contact-card[data-active="website"] .cc-caption[data-key="website"],
+  .contact-card[data-active="website"] .cc-seg[data-seg="handle"],
+  .contact-card[data-active="website"] .cc-seg[data-seg="suffix"],
+  .contact-card[data-active="website"] .cc-bracket-line[data-group="website"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  .contact-card[data-active="github"] .cc-caption[data-key="github"],
+  .contact-card[data-active="github"] .cc-seg[data-seg="handle"],
+  .contact-card[data-active="github"] .cc-bracket-line[data-group="handle"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  .contact-card[data-active="linkedin"] .cc-caption[data-key="linkedin"],
+  .contact-card[data-active="linkedin"] .cc-seg[data-seg="handle"],
+  .contact-card[data-active="linkedin"] .cc-bracket-line[data-group="handle"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  .contact-card[data-active="us"] .cc-caption[data-key="us"],
+  .contact-card[data-active="us"] .cc-seg[data-seg="cc"],
+  .contact-card[data-active="us"] .cc-bracket-line[data-group="us"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  .contact-card[data-active="ma"] .cc-caption[data-key="ma"],
+  .contact-card[data-active="ma"] .cc-seg[data-seg="area"],
+  .contact-card[data-active="ma"] .cc-bracket-line[data-group="ma"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  .contact-card[data-active="cell"] .cc-caption[data-key="cell"],
+  .contact-card[data-active="cell"] .cc-seg[data-seg="cc"],
+  .contact-card[data-active="cell"] .cc-seg[data-seg="area"],
+  .contact-card[data-active="cell"] .cc-seg[data-seg="rest"],
+  .contact-card[data-active="cell"] .cc-bracket-line[data-group="cell"] {
+    opacity: 1;
+    color: var(--cc-accent);
+  }
+
+  @media (max-width: 480px) {
+    .cc-row-handle { flex-direction: column; }
+  }
+  /* ============================================================
+     END EMBEDDABLE SNIPPET CSS
+     ============================================================ */
+</style>
+
+<div class="contact-card" id="contactCard">
+
+  <div class="cc-row-website">
+    <a class="cc-caption" data-key="website" href="https://andrewsuyer.com" target="_blank" rel="noopener">Website</a>
+  </div>
+
+  <p class="cc-main">
+    <span class="cc-seg" data-seg="prefix">contact@</span><span class="cc-seg" data-seg="handle">andrewsuyer</span><span class="cc-seg" data-seg="suffix">.com</span>
+  </p>
+
+  <div class="cc-row-handle">
+    <a class="cc-caption" data-key="linkedin" href="https://www.linkedin.com/in/andrewsuyer" target="_blank" rel="noopener">LinkedIn, GitHub</a>
+    <a class="cc-caption" data-key="github" href="https://github.com/AndrewSuyer" target="_blank" rel="noopener"></a>
+  </div>
+
+  <div class="cc-row-email">
+    <a class="cc-caption" data-key="email" href="mailto:contact@andrewsuyer.com">Email</a>
+  </div>
+
+  <div class="cc-phone-block">
+    <div class="cc-row-phone-top">
+      <span class="cc-caption cc-caption--static" data-key="us" tabindex="0">US</span>
+      <span class="cc-caption cc-caption--static" data-key="ma" tabindex="0">MA</span>
+    </div>
+
+    <p class="cc-main cc-phone-main">
+      <span class="cc-seg" data-seg="cc">+1</span> <span class="cc-seg" data-seg="area">508</span> <span class="cc-seg" data-seg="rest">868 2606</span>
+    </p>
+
+    <div class="cc-row-cell">
+      <span class="cc-caption cc-caption--static" data-key="cell" tabindex="0">Cell</span>
+    </div>
+  </div>
+
+  <svg class="cc-overlay" aria-hidden="true"></svg>
+</div>
+
+<script>
+(function () {
+  var card = document.getElementById('contactCard');
+  var svg = card.querySelector('.cc-overlay');
+  var TICK = 7;      // length of the little end-hooks
+  var ARM_PAD = 6;   // how far the outer email bracket sits from the text edges
+
+  function rectOf(sel) {
+    return card.querySelector(sel).getBoundingClientRect();
+  }
+
+  function textRectOf(sel) {
+    var el = card.querySelector(sel);
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var rects = range.getClientRects();
+    var left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity;
+    for (var i = 0; i < rects.length; i++) {
+      var rc = rects[i];
+      left = Math.min(left, rc.left);
+      right = Math.max(right, rc.right);
+      top = Math.min(top, rc.top);
+      bottom = Math.max(bottom, rc.bottom);
+    }
+    return { left: left, right: right, top: top, bottom: bottom };
+  }
+
+  function draw() {
+    var cardRect = card.getBoundingClientRect();
+    var prefix = textRectOf('[data-seg="prefix"]');
+    var handle = textRectOf('[data-seg="handle"]');
+    var suffix = textRectOf('[data-seg="suffix"]');
+    var main = rectOf('.cc-main');
+    var rowWebsite = rectOf('.cc-row-website');
+    var rowHandle = rectOf('.cc-row-handle');
+    var rowEmail = rectOf('.cc-row-email');
+
+    function x(v) { return v - cardRect.left; }
+    function y(v) { return v - cardRect.top; }
+
+    var wLeft = x(handle.left), wRight = x(suffix.right);
+    var hLeft = x(handle.left), hRight = x(handle.right);
+    var eLeft = x(prefix.left) - ARM_PAD, eRight = x(suffix.right) + ARM_PAD;
+
+    var websiteBarY = y(main.top) - 12;
+    var websiteStemTopY = y(rowWebsite.bottom) + 5;
+
+    var handleBarY = y(main.bottom) + 10;
+    var handleStemBotY = y(rowHandle.top) - 5;
+
+    var armTopY = y(main.bottom) + 3;
+    var armBottomY = y(rowHandle.bottom) + 12;
+    var emailStemBotY = y(rowEmail.top) - 5;
+
+    // Align "Website" above the andrewsuyer.com chunk, and LinkedIn/GitHub
+    // below the andrewsuyer chunk, instead of the row's own center.
+    var websiteCaptionEl = card.querySelector('[data-key="website"]');
+    var linkedinEl = card.querySelector('[data-key="linkedin"]');
+    var githubEl = card.querySelector('[data-key="github"]');
+
+    var websiteCenter = (handle.left + suffix.right) / 2;
+    var handleCenter = (handle.left + handle.right) / 2;
+
+    websiteCaptionEl.style.left =
+      (websiteCenter - (rowWebsite.left + rowWebsite.right) / 2) + 'px';
+
+    var handleShift = handleCenter - (rowHandle.left + rowHandle.right) / 2;
+    linkedinEl.style.left = handleShift + 'px';
+    githubEl.style.left = handleShift + 'px';
+
+    // ---- phone number ----
+    var ccSeg = textRectOf('[data-seg="cc"]');
+    var areaSeg = textRectOf('[data-seg="area"]');
+    var restSeg = textRectOf('[data-seg="rest"]');
+    var phoneMain = rectOf('.cc-phone-main');
+    var rowPhoneTop = rectOf('.cc-row-phone-top');
+    var rowCell = rectOf('.cc-row-cell');
+
+    var usEl = card.querySelector('[data-key="us"]');
+    var maEl = card.querySelector('[data-key="ma"]');
+    usEl.style.left = ((ccSeg.left + ccSeg.right) / 2 - rowPhoneTop.left) + 'px';
+    maEl.style.left = ((areaSeg.left + areaSeg.right) / 2 - rowPhoneTop.left) + 'px';
+
+    var ccX1 = x(ccSeg.left), ccX2 = x(ccSeg.right);
+    var areaX1 = x(areaSeg.left), areaX2 = x(areaSeg.right);
+    var phoneX1 = x(ccSeg.left), phoneX2 = x(restSeg.right);
+
+    var phoneTopBarY = y(phoneMain.top) - 12;
+    var phoneTopStemY = y(rowPhoneTop.bottom) + 5;
+
+    var cellBarY = y(phoneMain.bottom) + 10;
+    var cellStemBotY = y(rowCell.top) - 5;
+
+    svg.setAttribute('viewBox', '0 0 ' + cardRect.width + ' ' + cardRect.height);
+
+    svg.innerHTML =
+      line('website', wLeft, websiteBarY, wRight, websiteBarY) +
+      line('website', wLeft, websiteBarY, wLeft, websiteBarY + TICK) +
+      line('website', wRight, websiteBarY, wRight, websiteBarY + TICK) +
+      line('website', mid(wLeft, wRight), websiteBarY, mid(wLeft, wRight), websiteStemTopY) +
+
+      line('handle', hLeft, handleBarY, hRight, handleBarY) +
+      line('handle', hLeft, handleBarY, hLeft, handleBarY - TICK) +
+      line('handle', hRight, handleBarY, hRight, handleBarY - TICK) +
+      line('handle', mid(hLeft, hRight), handleBarY, mid(hLeft, hRight), handleStemBotY) +
+
+      line('email', eLeft, armTopY, eLeft, armBottomY) +
+      line('email', eRight, armTopY, eRight, armBottomY) +
+      line('email', eLeft, armBottomY, eRight, armBottomY) +
+      line('email', mid(eLeft, eRight), armBottomY, mid(eLeft, eRight), emailStemBotY) +
+
+      line('us', ccX1, phoneTopBarY, ccX2, phoneTopBarY) +
+      line('us', ccX1, phoneTopBarY, ccX1, phoneTopBarY + TICK) +
+      line('us', ccX2, phoneTopBarY, ccX2, phoneTopBarY + TICK) +
+      line('us', mid(ccX1, ccX2), phoneTopBarY, mid(ccX1, ccX2), phoneTopStemY) +
+
+      line('ma', areaX1, phoneTopBarY, areaX2, phoneTopBarY) +
+      line('ma', areaX1, phoneTopBarY, areaX1, phoneTopBarY + TICK) +
+      line('ma', areaX2, phoneTopBarY, areaX2, phoneTopBarY + TICK) +
+      line('ma', mid(areaX1, areaX2), phoneTopBarY, mid(areaX1, areaX2), phoneTopStemY) +
+
+      line('cell', phoneX1, cellBarY, phoneX2, cellBarY) +
+      line('cell', phoneX1, cellBarY, phoneX1, cellBarY - TICK) +
+      line('cell', phoneX2, cellBarY, phoneX2, cellBarY - TICK) +
+      line('cell', mid(phoneX1, phoneX2), cellBarY, mid(phoneX1, phoneX2), cellStemBotY);
+  }
+
+  function mid(a, b) { return (a + b) / 2; }
+
+  function line(group, x1, y1, x2, y2) {
+    return '<line class="cc-bracket-line" data-group="' + group + '" ' +
+      'x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"></line>';
+  }
+
+  function setActive(key) {
+    if (key) { card.setAttribute('data-active', key); }
+    else { card.removeAttribute('data-active'); }
+  }
+
+  card.querySelectorAll('.cc-caption').forEach(function (a) {
+    var key = a.getAttribute('data-key');
+    a.addEventListener('mouseenter', function () { setActive(key); });
+    a.addEventListener('mouseleave', function () { setActive(null); });
+    a.addEventListener('focus', function () { setActive(key); });
+    a.addEventListener('blur', function () { setActive(null); });
+  });
+
+  var raf;
+  function scheduleDraw() {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', scheduleDraw);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(draw);
+  }
+  new ResizeObserver(scheduleDraw).observe(card);
+  draw();
+})();
+</script>
