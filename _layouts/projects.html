@@ -57,9 +57,122 @@ layout: default
     {%- endfor -%}
 </div>
 
+{%- comment %} Fullscreen viewer, shared by all galleries {% endcomment %}
+<div class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button type="button" class="lightbox-btn lightbox-close" aria-label="Close">&times;</button>
+    <button type="button" class="lightbox-btn lightbox-nav lightbox-prev" data-dir="-1" aria-label="Previous image">&#10094;</button>
+    <div class="lightbox-stage">
+        <img class="lightbox-img" alt="" draggable="false">
+        <p class="lightbox-caption"></p>
+    </div>
+    <button type="button" class="lightbox-btn lightbox-nav lightbox-next" data-dir="1" aria-label="Next image">&#10095;</button>
+</div>
+
 <script>
     (function () {
         var SWIPE_THRESHOLD = 40; // px of horizontal movement that counts as a swipe
+        var MAX_UPSCALE = 2.5;    // how far the fullscreen viewer will enlarge a small image
+
+        /* ---------- Fullscreen viewer ---------- */
+
+        var lightbox = document.querySelector('.lightbox');
+        var lbImg = lightbox.querySelector('.lightbox-img');
+        var lbCaption = lightbox.querySelector('.lightbox-caption');
+        var lbClose = lightbox.querySelector('.lightbox-close');
+        var lbNavButtons = lightbox.querySelectorAll('.lightbox-nav');
+        var lbState = null; // { slides, index, onClose, opener } while open
+        var lbStartX = null;
+        var lbSwiped = false;
+
+        // Size the image to fill as much of the screen as possible, leaving room for the caption
+        function lbFit() {
+            var w = lbImg.naturalWidth, h = lbImg.naturalHeight;
+            if (!w || !h) return;
+            var scale = Math.min(window.innerWidth * 0.92 / w, (window.innerHeight - 110) / h, MAX_UPSCALE);
+            lbImg.style.width = Math.round(w * scale) + 'px';
+            lbImg.style.height = Math.round(h * scale) + 'px';
+        }
+
+        function lbRender() {
+            var slide = lbState.slides[lbState.index];
+            var img = slide.querySelector('img');
+            lbImg.alt = img.alt;
+            lbImg.src = img.currentSrc || img.src;
+            lbCaption.textContent = slide.dataset.caption || '';
+            lbFit(); // no-op until the image has loaded; the load handler below calls it again
+        }
+
+        function lbStep(step) {
+            var n = lbState.slides.length;
+            lbState.index = (lbState.index + step + n) % n;
+            lbRender();
+        }
+
+        function lbOpen(slides, index, onClose) {
+            lbState = { slides: slides, index: index, onClose: onClose, opener: document.activeElement };
+            lbNavButtons.forEach(function (button) { button.hidden = slides.length < 2; });
+            lightbox.hidden = false;
+            document.documentElement.style.overflow = 'hidden';
+            lbRender();
+            lbClose.focus();
+        }
+
+        function lbHide() {
+            if (!lbState) return;
+            var state = lbState;
+            lbState = null;
+            lightbox.hidden = true;
+            lbImg.removeAttribute('src');
+            document.documentElement.style.overflow = '';
+            state.onClose(state.index);
+            if (state.opener && state.opener.focus) state.opener.focus();
+        }
+
+        lbImg.addEventListener('load', lbFit);
+        window.addEventListener('resize', function () { if (lbState) lbFit(); });
+        lbClose.addEventListener('click', lbHide);
+        lbNavButtons.forEach(function (button) {
+            button.addEventListener('click', function () { lbStep(parseInt(button.dataset.dir, 10)); });
+        });
+
+        // Click the dark area around the image to close (but not after a swipe)
+        lightbox.addEventListener('click', function (e) {
+            if (lbSwiped) { lbSwiped = false; return; }
+            if (e.target === lightbox || e.target.classList.contains('lightbox-stage')) lbHide();
+        });
+        lightbox.addEventListener('pointerdown', function (e) {
+            lbStartX = e.clientX;
+            lbSwiped = false;
+        });
+        lightbox.addEventListener('pointerup', function (e) {
+            if (lbStartX === null) return;
+            var dx = e.clientX - lbStartX;
+            lbStartX = null;
+            if (Math.abs(dx) >= SWIPE_THRESHOLD && lbState.slides.length > 1) {
+                lbSwiped = true;
+                lbStep(dx < 0 ? 1 : -1);
+            }
+        });
+        lightbox.addEventListener('pointercancel', function () { lbStartX = null; });
+
+        document.addEventListener('keydown', function (e) {
+            if (!lbState) return;
+            if (e.key === 'Escape') {
+                lbHide();
+            } else if (e.key === 'ArrowLeft' && lbState.slides.length > 1) {
+                lbStep(-1);
+            } else if (e.key === 'ArrowRight' && lbState.slides.length > 1) {
+                lbStep(1);
+            } else if (e.key === 'Tab') {
+                // Keep keyboard focus inside the viewer while it is open
+                var focusable = Array.prototype.filter.call(lightbox.querySelectorAll('button'), function (b) { return !b.hidden; });
+                var first = focusable[0], last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+        });
+
+        /* ---------- Galleries ---------- */
 
         document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
             var stage = gallery.querySelector('.gallery-stage');
@@ -91,18 +204,26 @@ layout: default
                 render();
             }
 
+            function openFullscreen() {
+                lbOpen(slides, current, function (index) {
+                    current = index; // keep the gallery on whichever image was last viewed
+                    render();
+                });
+            }
+
             gallery.querySelectorAll('[data-dir]').forEach(function (button) {
                 button.addEventListener('click', function () {
                     go(parseInt(button.dataset.dir, 10));
                 });
             });
 
-            // Clicking a peeking neighbor brings it to the front
+            // Clicking a peeking neighbor brings it to the front; clicking the front image opens it fullscreen
             slides.forEach(function (slide) {
                 slide.addEventListener('click', function () {
                     if (swiped) { swiped = false; return; }
                     if (slide.classList.contains('is-next')) go(1);
                     else if (slide.classList.contains('is-prev')) go(-1);
+                    else if (slide.classList.contains('is-active')) openFullscreen();
                 });
             });
 
@@ -125,6 +246,7 @@ layout: default
             gallery.addEventListener('keydown', function (e) {
                 if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
                 else if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+                else if (e.key === 'Enter' && e.target === gallery) { e.preventDefault(); openFullscreen(); }
             });
 
             render();
