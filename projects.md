@@ -9,18 +9,18 @@ permalink: /projects/
 This page showcases some projects I have worked on. Each project has its own webpage which
 is linked under each section.
 
-## Spreadsheet Application
+## Zoological Society of London’s Biobank Website
 
-As part of an Object-Oriented Analysis and Design course, I built a spreadsheet
-application backend. I applied various object-oriented design patterns and principles
-using the Java programming language. Highlight features include expressions with cell
-references, conditional operations (`COUNTIF`, `SUMIF`, etc.), and cascading cell
-updates when referenced cells change. If you want to learn more about some of the design
-problems I faced and solutions I came up with, check out the project page!
+For my [Interactive Qualifying Project](https://www.wpi.edu/project-based-learning/project-based-education/interactive-qualifying-project) 
+(a 7-week study-abroad project in London, England), I helped to develop a searchable
+web catalog for a wildlife biobank operated by the [Zoological Society of London](https://www.zsl.org/).
+Instead of making assumptions about how the website would be used, my team worked closely 
+with stakeholders and end-users to understand their needs, and as a result, the website 
+we made was very well suited for them.
 
-- [Project page](/projects/spreadsheet)
-- [GitHub repository](https://github.com/asuyer-wpi/Spreadsheet){:target="_blank"} 
-
+- [Project page](/projects/biobank)
+- [Full research report and executive summary](https://wp.wpi.edu/london/projects/2026-projects-summer/biobank/)
+<!-- - [The website!](https://zslbiobank.org/) -->
 
 ## ShopComp
 
@@ -32,6 +32,17 @@ frontend and AWS on the backend.
 - [GitHub organization](https://github.com/Software-Engineering-Kappa){:target="_blank"} 
   (frontend and backend repositories)
 
+## Spreadsheet Application
+
+As part of an Object-Oriented Analysis and Design course, I built a spreadsheet
+application backend. I applied various object-oriented design patterns and principles
+using the Java programming language. Highlight features include expressions with cell
+references, conditional operations (`COUNTIF`, `SUMIF`, etc.), and cascading cell
+updates when referenced cells change. If you want to learn more about some of the design
+problems I faced and solutions I came up with, check out the project page!
+
+- [Project page](/projects/spreadsheet)
+- [GitHub repository](https://github.com/asuyer-wpi/Spreadsheet){:target="_blank"} 
 
 ## Building a Database Application
 

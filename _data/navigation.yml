@@ -3,6 +3,8 @@
 - name: Projects
   link: /projects/
   children:
+    - name: Biobank Website
+      link: /projects/biobank
     - name: Spreadsheet
       link: /projects/spreadsheet
     - name: ShopComp
