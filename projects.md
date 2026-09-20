@@ -123,3 +123,9 @@ projects:
 
 This page showcases some projects I have worked on. Each project has its own webpage which
 is linked under each section.
+
+I am working on the following projects right now and will be making a write-up soon:
+- RASER (Rubric for Assessing Scientific Experimental Research): a full-stack web
+  application for peer-based academic review
+- Operating system and web interface for a Humanoid Robot (my senior project)
+

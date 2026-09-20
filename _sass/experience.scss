@@ -1,0 +1,221 @@
+/* Styles for the experience page (_layouts/experience.html) */
+
+.experience-page {
+  padding: 1rem;
+}
+
+/* Section headings look like the ones on the PDF resume: bold caps with a rule underneath */
+.exp-section {
+  margin-bottom: 2.5rem;
+}
+
+.exp-heading {
+  margin: 0 0 1rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #333;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+/* Icon tiles (shared by entries and skills) */
+
+.icon-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid #d5e3c3;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* `span.` makes this outrank the global `img:not(.hero-image)` border/width rules in about.scss */
+span.icon-tile > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  object-fit: contain;
+}
+
+.icon-placeholder {
+  color: #333;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.icon-tile--entry {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.3rem;
+  border-radius: 8px;
+
+  .icon-placeholder {
+    font-size: 1.25rem;
+  }
+}
+
+.icon-tile--skill {
+  width: 4rem;
+  height: 4rem;
+  padding: 0.75rem;
+  border-radius: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  .icon-placeholder {
+    font-size: 1.75rem;
+  }
+}
+
+
+/* Resume-style entries: jobs, schools, projects */
+
+.entry {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.entry-head {
+  min-width: 0;
+}
+
+.entry-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0 1rem;
+}
+
+.entry-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.entry-location,
+.entry-dates {
+  margin-left: auto;
+  text-align: right;
+}
+
+.entry-line--sub {
+  font-style: italic;
+}
+
+.entry-dates span {
+  white-space: nowrap;
+}
+
+.entry-body {
+  grid-column: 1 / -1;
+  margin-top: 0.4rem;
+}
+
+.entry-bullets {
+  margin: 0 0 0 1.25rem;
+  padding: 0;
+  list-style: disc;
+  font-size: 0.95rem;
+
+  li {
+    margin: 0.2rem 0;
+  }
+
+  /* Nested bullets */
+  .entry-bullets {
+    margin-left: 1.25rem;
+    list-style: circle;
+  }
+}
+
+
+/* Skills: a grid of icon tiles that link to each tool's homepage */
+
+.skill-group {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+.skill-group-name {
+  margin: 0;
+  padding-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 5.5rem;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+
+.skill-name {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+a.skill:hover,
+a.skill:focus-visible {
+  text-decoration: none;
+
+  .icon-tile--skill {
+    transform: translateY(-5px) rotate(-3deg);
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  .skill-name {
+    color: #2a7ae2;
+  }
+}
+
+/* Stack the skill categories above their tiles on narrow screens */
+@media (max-width: 600px) {
+  .skill-group {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .skill-group-name {
+    padding-top: 0;
+  }
+
+  .skill-list {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-tile--skill {
+    transition: none;
+  }
+
+  a.skill:hover .icon-tile--skill,
+  a.skill:focus-visible .icon-tile--skill {
+    transform: none;
+  }
+}

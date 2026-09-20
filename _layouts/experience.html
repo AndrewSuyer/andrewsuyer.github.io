@@ -1,0 +1,160 @@
+---
+layout: default
+---
+{% comment %}
+    Experience page layout: a resume-style page that is easier on the eyes. Everything is read from the
+    page's front matter (see experience.md for a full example). All sections are optional.
+
+    section_order: [skills, experience, education, projects]   # which sections to show, and in what order
+
+    experience:                                     # work experience
+      - company: Company name                       # required
+        url: https://example.com                    # optional, makes the name a link
+        icon: /assets/images/icons/example.png      # optional
+        location: City, ST
+        role: Job title
+        dates: May 2025 – August 2025               # a string, or a list of strings for multiple ranges
+        bullets:                                    # each is a string, or {text, children} for nested bullets
+          - Top-level bullet
+          - text: Bullet with sub-bullets
+            children:
+              - Sub-bullet
+
+    education:                                      # same as experience, but with `school` and `degree`
+      - school: ...
+        degree: ...
+
+    projects:                                       # same as experience, but with `name` and `role`
+      - name: ...
+        role: ...
+
+    skills:                                         # groups of icon tiles
+      - category: Programming
+        items:
+          - name: Python                            # required
+            url: https://www.python.org/            # optional, makes the tile a link
+            icon: python                            # optional: a devicon name, a full URL, or a /local/path.svg
+            variant: original                       # optional devicon variant (default original), e.g. plain, wordmark
+
+    Strings that contain a colon followed by a space, or that start with characters like " ' [ { * & ! % @,
+    must be wrapped in quotes in YAML.
+    Anything written in the Markdown body of the page is rendered above the sections.
+{% endcomment %}
+{%- assign order = page.section_order -%}
+{%- unless order -%}
+{%- assign order = "experience,education,projects,skills" | split: "," -%}
+{%- endunless -%}
+
+<div class="experience-page">
+    <div class="experience-intro">
+        {{ content }}
+    </div>
+
+    {%- for section in order -%}
+    {%- case section -%}
+
+    {%- when 'experience' -%}
+    {%- if page.experience.size > 0 %}
+    <section class="exp-section" id="experience">
+        <h2 class="exp-heading">Work Experience</h2>
+        {%- for job in page.experience %}
+        {% include experience-entry.html name=job.company url=job.url icon=job.icon location=job.location
+                  subtitle=job.role dates=job.dates bullets=job.bullets %}
+        {%- endfor %}
+    </section>
+    {%- endif -%}
+
+    {%- when 'education' -%}
+    {%- if page.education.size > 0 %}
+    <section class="exp-section" id="education">
+        <h2 class="exp-heading">Education</h2>
+        {%- for school in page.education %}
+        {% include experience-entry.html name=school.school url=school.url icon=school.icon location=school.location
+                  subtitle=school.degree dates=school.dates bullets=school.bullets %}
+        {%- endfor %}
+    </section>
+    {%- endif -%}
+
+    {%- when 'projects' -%}
+    {%- if page.projects.size > 0 %}
+    <section class="exp-section" id="projects">
+        <h2 class="exp-heading">Projects</h2>
+        {%- for project in page.projects %}
+        {% include experience-entry.html name=project.name url=project.url icon=project.icon location=project.location
+                  subtitle=project.role dates=project.dates bullets=project.bullets %}
+        {%- endfor %}
+    </section>
+    {%- endif -%}
+
+    {%- when 'skills' -%}
+    {%- if page.skills.size > 0 %}
+    <section class="exp-section" id="skills">
+        <h2 class="exp-heading">Technical Skills</h2>
+        {%- for group in page.skills %}
+        <div class="skill-group">
+            <h3 class="skill-group-name">{{ group.category }}</h3>
+            <ul class="skill-list">
+                {%- for skill in group.items -%}
+                {%- comment %} Work out where the icon comes from: local path, full URL, or a devicon name {% endcomment -%}
+                {%- assign icon_src = nil -%}
+                {%- if skill.icon -%}
+                {%- assign first_char = skill.icon | slice: 0 -%}
+                {%- if first_char == '/' -%}
+                {%- assign icon_src = skill.icon | relative_url -%}
+                {%- elsif skill.icon contains '://' -%}
+                {%- assign icon_src = skill.icon -%}
+                {%- else -%}
+                {%- assign variant = skill.variant | default: 'original' -%}
+                {%- capture icon_src -%}https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ skill.icon }}/{{ skill.icon }}-{{ variant }}.svg{%- endcapture -%}
+                {%- endif -%}
+                {%- endif %}
+                <li>
+                    {%- if skill.url -%}
+                    <a class="skill" href="{{ skill.url }}" target="_blank" rel="noopener">
+                    {%- else -%}
+                    <div class="skill">
+                    {%- endif %}
+                        <span class="icon-tile icon-tile--skill" data-initial="{{ skill.name | slice: 0 }}">
+                            {%- if icon_src -%}
+                            <img src="{{ icon_src }}" alt="" loading="lazy">
+                            {%- else -%}
+                            <span class="icon-placeholder">{{ skill.name | slice: 0 }}</span>
+                            {%- endif -%}
+                        </span>
+                        <span class="skill-name">{{ skill.name }}</span>
+                    {%- if skill.url -%}
+                    </a>
+                    {%- else -%}
+                    </div>
+                    {%- endif %}
+                </li>
+                {%- endfor %}
+            </ul>
+        </div>
+        {%- endfor %}
+    </section>
+    {%- endif -%}
+
+    {%- endcase -%}
+    {%- endfor %}
+</div>
+
+<script>
+    // If an icon fails to load (bad path, offline CDN), swap in a tile with the item's first letter
+    (function () {
+        function fallback(img) {
+            var tile = img.parentNode;
+            var placeholder = document.createElement('span');
+            placeholder.className = 'icon-placeholder';
+            placeholder.textContent = tile.dataset.initial || '';
+            tile.replaceChild(placeholder, img);
+        }
+        document.addEventListener('error', function (e) {
+            if (e.target.tagName === 'IMG' && e.target.parentNode.classList.contains('icon-tile')) fallback(e.target);
+        }, true);
+        // Catch images that already failed before this script ran
+        document.querySelectorAll('.icon-tile img').forEach(function (img) {
+            if (img.complete && img.naturalWidth === 0) fallback(img);
+        });
+    })();
+</script>

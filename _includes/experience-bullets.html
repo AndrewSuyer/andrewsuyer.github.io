@@ -1,0 +1,22 @@
+{% comment %}
+    Renders a (possibly nested) bullet list. Calls itself for `children`.
+
+    Parameters:
+        items - a list where each item is either a string, or a map with `text` and optional `children`
+                (another list of the same shape)
+
+    Text is rendered as inline Markdown, so **bold**, `code`, and [links](https://example.com) work.
+{% endcomment %}
+<ul class="entry-bullets">
+    {%- for item in include.items %}
+    {%- if item.text %}
+    <li>{{ item.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+        {%- if item.children.size > 0 %}
+        {% include experience-bullets.html items=item.children %}
+        {%- endif %}
+    </li>
+    {%- else %}
+    <li>{{ item | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
+    {%- endif %}
+    {%- endfor %}
+</ul>
