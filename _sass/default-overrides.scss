@@ -57,3 +57,44 @@ main.page-content {
   margin: 0;
 }
 
+
+
+/* Mobile (hamburger) menu. On small screens minima turns .site-nav into a white pop-out box, so match it to
+   the dark header, stack the links, and always show the sub-links (there is no hover on touch screens) */
+@include media-query($on-palm) {
+  header.site-header .site-nav {
+    background-color: #333333;
+    border-color: #666666;
+    text-align: left;
+
+    .menu-icon > svg {
+      fill: #fafafa;
+    }
+
+    .navbar {
+      display: block;
+    }
+
+    .navbar .nav-item {
+      margin-right: 0;
+    }
+
+    .page-link {
+      color: #fafafa;
+    }
+
+    .dropdown-menu {
+      display: block;
+      position: static;
+      min-width: 0;
+      background: transparent;
+      box-shadow: none;
+
+      li a {
+        padding: 3px 10px 3px 28px; /* extra left padding indents the sub-links under their parent */
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+    }
+  }
+}
