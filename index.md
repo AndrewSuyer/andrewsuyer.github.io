@@ -42,6 +42,7 @@ I look forward to growing alongside my peers and making meaningful connections.
 
 - [Project showcase](/projects/)
 - [Resume](/resume.html)
+- [Experience](/experience/)
 
 
 ## Contact Me

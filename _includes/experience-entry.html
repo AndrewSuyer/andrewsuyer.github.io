@@ -1,0 +1,52 @@
+{% comment %}
+    One resume-style entry (a job, a school, or a project):
+
+        [icon] Name (linked)                          Location
+               Role / degree (italic)                 Dates
+        - bullets (nestable)
+
+    Parameters (all optional except name):
+        name      - text on the top left (bold)
+        url       - makes the name a hyperlink; http(s) links open in a new tab
+        icon      - path to an image, e.g. /assets/images/icons/wpi.png. If missing (or the image fails to load),
+                    a tile with the first letter of the name is shown instead
+        location  - text on the top right
+        subtitle  - italic text on the second line, left
+        dates     - text on the second line, right. Either a string or a list of strings (one per date range)
+        bullets   - list for experience-bullets.html
+{% endcomment %}
+{%- assign ranges = include.dates | join: '|' | split: '|' -%}
+<article class="entry">
+    <span class="icon-tile icon-tile--entry" data-initial="{{ include.name | slice: 0 }}">
+        {%- if include.icon -%}
+        <img src="{{ include.icon | relative_url }}" alt="" loading="lazy">
+        {%- else -%}
+        <span class="icon-placeholder">{{ include.name | slice: 0 }}</span>
+        {%- endif -%}
+    </span>
+    <div class="entry-head">
+        <div class="entry-line">
+            <h3 class="entry-name">
+                {%- if include.url -%}
+                <a href="{{ include.url }}"{% if include.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ include.name }}</a>
+                {%- else -%}
+                {{ include.name }}
+                {%- endif -%}
+            </h3>
+            <span class="entry-location">{{ include.location }}</span>
+        </div>
+        <div class="entry-line entry-line--sub">
+            <span class="entry-subtitle">{{ include.subtitle }}</span>
+            <span class="entry-dates">
+                {%- for range in ranges -%}
+                <span>{{ range }}</span>{% unless forloop.last %}, {% endunless %}
+                {%- endfor -%}
+            </span>
+        </div>
+    </div>
+    {%- if include.bullets.size > 0 %}
+    <div class="entry-body">
+        {% include experience-bullets.html items=include.bullets %}
+    </div>
+    {%- endif %}
+</article>

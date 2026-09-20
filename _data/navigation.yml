@@ -12,5 +12,7 @@
     - name: Database Application
       link: /projects/dbs-project
     # Add more subpages here as needed
+- name: Experience
+  link: /experience/
 - name: Resume
   link: /resume.html
