@@ -73,6 +73,7 @@ education:
       - "GPA 4.89/4.00, Class rank 2 (top 1%)"
       - "Senior year: dual enrollment at [Quinsigamond Community College](https://www.qcc.edu/) (Worcester, MA)"
 
+#TODO: add current projects
 projects:
   - name: Designing and Prototyping a Website for the Zoological Society of London’s Biobank
     url: /projects/biobank

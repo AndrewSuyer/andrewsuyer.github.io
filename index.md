@@ -5,9 +5,8 @@ title: Home
 
 # Welcome to my website!
 
-This is my personal portfolio website. I'll be updating this site with projects I am working on as
-a student.
-
+This is my personal portfolio website. Here, you can find details about my work
+experiences and write-ups about projects I've worked on.
 
 ## About Me
 
@@ -40,9 +39,9 @@ I look forward to growing alongside my peers and making meaningful connections.
 
 ## Contents
 
-- [Project showcase](/projects/)
-- [Resume](/resume/)
-- [Experience](/experience/)
+- [Projects](/projects/): showcase of some projects I have worked on
+- [Resume](/resume/): current versions of my resumes
+- [Experience](/experience/): comprehensive list of my experiences
 
 
 ## Contact Me
