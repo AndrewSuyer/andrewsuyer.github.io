@@ -1,0 +1,159 @@
+/* Styles for the projects page (_layouts/projects.html) */
+
+.projects-page {
+  padding: 1rem;
+}
+
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2rem 0;
+  border-top: 1px solid #c9d8b6;
+
+  /* Put the gallery on the left; the text stays first in the DOM so mobile shows text first */
+  &.project--flip .project-gallery {
+    order: -1;
+  }
+
+  &.project--no-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
+/* Stack into a single column (text, then gallery) on narrow screens */
+@media (max-width: 800px) {
+  .project {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+
+    &.project--flip .project-gallery {
+      order: 0;
+    }
+  }
+}
+
+
+/* Image gallery */
+
+.gallery {
+  outline-offset: 4px;
+}
+
+.gallery-stage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  touch-action: pan-y; /* let the browser handle vertical scroll, we handle horizontal swipes */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gallery-slide {
+  position: absolute;
+  top: 2%;
+  left: 10%;
+  width: 80%;
+  height: 78%;
+  margin: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 3px solid #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+
+  /* Default: not shown, tucked behind the focused image */
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.7);
+  z-index: 1;
+
+  /* Neighbors peek out from underneath, to the lower left and lower right */
+  &.is-prev,
+  &.is-next {
+    opacity: 0.4;
+    filter: brightness(0.8);
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &.is-prev {
+    transform: translate(-20%, 20%) scale(0.85);
+  }
+
+  &.is-next {
+    transform: translate(20%, 20%) scale(0.85);
+  }
+
+  &.is-active {
+    opacity: 1;
+    filter: none;
+    pointer-events: auto;
+    transform: none;
+    z-index: 3;
+  }
+
+  /* Overrides the global `img:not(.hero-image)` border/width rules in about.scss */
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    object-fit: contain;
+    -webkit-user-drag: none;
+  }
+}
+
+.gallery-caption {
+  min-height: 1.5em;
+  margin: 0.5rem 0 0.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.gallery-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #333;
+  color: #fafafa;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: #2a7ae2;
+  }
+}
+
+.gallery-count {
+  min-width: 3.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-slide {
+    transition: none;
+  }
+}
