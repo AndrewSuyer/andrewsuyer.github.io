@@ -110,13 +110,13 @@ projects:
 
       - [Project page](/projects/dbs-project)
       - [GitHub repository](https://github.com/asuyer-wpi/CS3431_Project/){:target="_blank"} (currently private)
-    images:
-      - src: /assets/images/dbs-project/ERD-annotated.png
-        alt: Annotated entity relationship diagram for the wine management database
-        caption: Entity relationship diagram
-      - src: /assets/images/dbs-project/program-usage.png
-        alt: The program used to interact with the database
-        caption: Program for interacting with the database
+    # images:
+    #   - src: /assets/images/dbs-project/ERD-annotated.png
+    #     alt: Annotated entity relationship diagram for the wine management database
+    #     caption: Entity relationship diagram
+    #   - src: /assets/images/dbs-project/program-usage.png
+    #     alt: The program used to interact with the database
+    #     caption: Program for interacting with the database
 ---
 
 # Projects
