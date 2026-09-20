@@ -25,9 +25,17 @@ Python, worked on team projects while managing tasks with Jira, researched and e
 different agent architectures, and developed skills and plugins to extend agent
 functionality.
 
-My experiences have taught me to be adaptable and innovative, and I'm eager to continue expanding 
-my knowledge in this field. I look forward to growing alongside my peers and making meaningful 
-connections.
+Outside my internships, I have worked on several software projects across many different
+fields, through which I have developed a diverse set of skills related to frontend and
+backend development, designing APIs, building database applications, and much more. I've
+also gained less-technical skills like working with stakeholders, translating business
+needs into technical solutions, and facilitating meetings with team members and
+stakeholders. You can take a look at my [projects page](/projects/) to see some of my
+projects.
+
+My experiences have taught me what it takes to own a software project end-to-end. I am
+adaptable and innovative, and I'm eager to continue expanding my knowledge in this field.
+I look forward to growing alongside my peers and making meaningful connections.
 
 
 ## Contents
