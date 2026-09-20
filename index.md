@@ -41,7 +41,7 @@ I look forward to growing alongside my peers and making meaningful connections.
 ## Contents
 
 - [Project showcase](/projects/)
-- [Resume](/resume.html)
+- [Resume](/resume/)
 - [Experience](/experience/)
 
 

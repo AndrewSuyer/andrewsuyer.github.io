@@ -206,6 +206,6 @@ skills:
 
 This is a full listing of all my work experience, education, and projects. See my
 [projects page](/projects/) for more details about my projects. See my 
-[resumes](/resume.html) for more specialized and recent listings of my experience.
+[resumes](/resume/) for more specialized and recent listings of my experience.
 
 
