@@ -183,6 +183,9 @@ skills:
       - name: Jira
         url: https://www.atlassian.com/software/jira
         icon: jira
+      - name: GitHub
+        url: https://github.com
+        icon: /assets/icons/github.png
 
   - category: AI Agents
     items:
@@ -201,6 +204,21 @@ skills:
       - name: OpenCode
         url: https://opencode.ai/
         icon: /assets/icons/opencode.png
+
+  - category: Web Frameworks
+    items:
+      - name: React
+        url: https://react.dev/
+        icon: /assets/icons/react.png
+      - name: Next.js
+        url: https://nextjs.org/
+        icon: /assets/icons/nextjs.jpg
+
+  - category: Cloud Computing
+    items:
+      - name: AWS
+        url: https://aws.amazon.com
+        icon: /assets/icons/aws.webp
 ---
 
 # Experience
