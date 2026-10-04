@@ -6,7 +6,7 @@
         - bullets (nestable)
 
     Parameters (all optional except name):
-        name      - text on the top left (bold)
+        name      - text on the top left (bold). Also gives the entry the anchor id `entry-<name | slugify>`
         url       - makes the name a hyperlink; http(s) links open in a new tab
         icon      - path to an image, e.g. /assets/images/icons/wpi.png. If missing (or the image fails to load),
                     a tile with the first letter of the name is shown instead
@@ -16,7 +16,7 @@
         bullets   - list for experience-bullets.html
 {% endcomment %}
 {%- assign ranges = include.dates | join: '|' | split: '|' -%}
-<article class="entry">
+<article class="entry" id="entry-{{ include.name | slugify }}">
     <span class="icon-tile icon-tile--entry" data-initial="{{ include.name | slice: 0 }}">
         {%- if include.icon -%}
         <img src="{{ include.icon | relative_url }}" alt="" loading="lazy">

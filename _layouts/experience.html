@@ -19,6 +19,10 @@ layout: default
           - text: Bullet with sub-bullets
             children:
               - Sub-bullet
+        skills_used:                                # optional: skills (matched by name to `skills` below) used here.
+          - Python                                  # Clicking a skill tile lists every entry that names it.
+          - name: AWS                               # Use {name, note} to explain how the skill was used
+            note: Deployed a REST API with the CDK  # (inline Markdown)
 
     education:                                      # same as experience, but with `school` and `degree`
       - school: ...
@@ -35,6 +39,10 @@ layout: default
             url: https://www.python.org/            # optional, makes the tile a link
             icon: python                            # optional: a devicon name, a full URL, or a /local/path.svg
             variant: original                       # optional devicon variant (default original), e.g. plain, wordmark
+
+    Clicking a skill tile shows, in a panel to the right, every experience/education/project entry whose
+    `skills_used` names it (with its note), plus a link to the skill's `url`. A skill no entry names says it was
+    used for things not listed on the site.
 
     Strings that contain a colon followed by a space, or that start with characters like " ' [ { * & ! % @,
     must be wrapped in quotes in YAML.
@@ -88,50 +96,95 @@ layout: default
 
     {%- when 'skills' -%}
     {%- if page.skills.size > 0 %}
+    {%- assign entry_sources = "experience,projects,education" | split: "," %}
     <section class="exp-section" id="skills">
         <h2 class="exp-heading">Technical Skills</h2>
-        {%- for group in page.skills %}
-        <div class="skill-group">
-            <h3 class="skill-group-name">{{ group.category }}</h3>
-            <ul class="skill-list">
-                {%- for skill in group.items -%}
-                {%- comment %} Work out where the icon comes from: local path, full URL, or a devicon name {% endcomment -%}
-                {%- assign icon_src = nil -%}
-                {%- if skill.icon -%}
-                {%- assign first_char = skill.icon | slice: 0 -%}
-                {%- if first_char == '/' -%}
-                {%- assign icon_src = skill.icon | relative_url -%}
-                {%- elsif skill.icon contains '://' -%}
-                {%- assign icon_src = skill.icon -%}
-                {%- else -%}
-                {%- assign variant = skill.variant | default: 'original' -%}
-                {%- capture icon_src -%}https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ skill.icon }}/{{ skill.icon }}-{{ variant }}.svg{%- endcapture -%}
-                {%- endif -%}
-                {%- endif %}
-                <li>
-                    {%- if skill.url -%}
-                    <a class="skill" href="{{ skill.url }}" target="_blank" rel="noopener">
-                    {%- else -%}
-                    <div class="skill">
+        <div class="skills-layout">
+            <div class="skills-groups">
+                {%- assign details = "" -%}
+                {%- for group in page.skills %}
+                <div class="skill-group">
+                    <h3 class="skill-group-name">{{ group.category }}</h3>
+                    <ul class="skill-list">
+                        {%- for skill in group.items -%}
+                        {%- capture detail_id %}skill-{{ forloop.parentloop.index }}-{{ forloop.index }}{% endcapture -%}
+                        {%- comment %} Work out where the icon comes from: local path, full URL, or a devicon name {% endcomment -%}
+                        {%- assign icon_src = nil -%}
+                        {%- if skill.icon -%}
+                        {%- assign first_char = skill.icon | slice: 0 -%}
+                        {%- if first_char == '/' -%}
+                        {%- assign icon_src = skill.icon | relative_url -%}
+                        {%- elsif skill.icon contains '://' -%}
+                        {%- assign icon_src = skill.icon -%}
+                        {%- else -%}
+                        {%- assign variant = skill.variant | default: 'original' -%}
+                        {%- capture icon_src -%}https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ skill.icon }}/{{ skill.icon }}-{{ variant }}.svg{%- endcapture -%}
+                        {%- endif -%}
+                        {%- endif %}
+                        <li>
+                            <button type="button" class="skill" data-skill="{{ detail_id }}" aria-controls="skill-details" aria-pressed="false">
+                                <span class="icon-tile icon-tile--skill" data-initial="{{ skill.name | slice: 0 }}">
+                                    {%- if icon_src -%}
+                                    <img src="{{ icon_src }}" alt="" loading="lazy">
+                                    {%- else -%}
+                                    <span class="icon-placeholder">{{ skill.name | slice: 0 }}</span>
+                                    {%- endif -%}
+                                </span>
+                                <span class="skill-name">{{ skill.name }}</span>
+                            </button>
+                        </li>
+                        {%- comment %} Collect every entry whose skills_used names this skill (case-insensitive) {% endcomment -%}
+                        {%- assign skill_key = skill.name | downcase | strip -%}
+                        {%- capture uses -%}
+                        {%- for source in entry_sources -%}
+                        {%- for entry in page[source] -%}
+                        {%- for used in entry.skills_used -%}
+                        {%- assign used_name = used.name | default: used | downcase | strip -%}
+                        {%- if used_name == skill_key -%}
+                        {%- assign entry_name = entry.company | default: entry.school | default: entry.name -%}
+                        {%- case source -%}
+                        {%- when 'experience' %}{% assign kind = 'Work Experience' -%}
+                        {%- when 'projects' %}{% assign kind = 'Project' -%}
+                        {%- else %}{% assign kind = 'Education' -%}
+                        {%- endcase %}
+                        <li class="skill-use">
+                            <a class="skill-use-name" href="#entry-{{ entry_name | slugify }}">{{ entry_name }}</a>
+                            <span class="skill-use-meta">{{ kind }}{% assign sub = entry.role | default: entry.degree %}{% if sub %} · {{ sub }}{% endif %}</span>
+                            {%- if used.note %}
+                            <p class="skill-use-note">{{ used.note | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+                            {%- endif %}
+                        </li>
+                        {%- endif -%}
+                        {%- endfor -%}
+                        {%- endfor -%}
+                        {%- endfor -%}
+                        {%- endcapture -%}
+                        {%- capture details %}{{ details }}
+                <div class="skill-detail" id="{{ detail_id }}" hidden>
+                    <h3 class="skill-detail-name">{{ skill.name }}</h3>
+                    {%- assign uses = uses | strip -%}
+                    {%- if uses != "" %}
+                    <p class="skill-detail-intro">Where I've used {{ skill.name }}:</p>
+                    <ul class="skill-uses">{{ uses }}
+                    </ul>
+                    {%- else %}
+                    <p class="skill-detail-intro">I have experience using {{ skill.name }} for things that aren't listed on this website.</p>
                     {%- endif %}
-                        <span class="icon-tile icon-tile--skill" data-initial="{{ skill.name | slice: 0 }}">
-                            {%- if icon_src -%}
-                            <img src="{{ icon_src }}" alt="" loading="lazy">
-                            {%- else -%}
-                            <span class="icon-placeholder">{{ skill.name | slice: 0 }}</span>
-                            {%- endif -%}
-                        </span>
-                        <span class="skill-name">{{ skill.name }}</span>
-                    {%- if skill.url -%}
-                    </a>
-                    {%- else -%}
-                    </div>
+                    {%- if skill.url %}
+                    <a class="skill-detail-link" href="{{ skill.url }}" target="_blank" rel="noopener">Learn more about {{ skill.name }} &#8599;</a>
                     {%- endif %}
-                </li>
+                </div>
+                        {%- endcapture -%}
+                        {%- endfor %}
+                    </ul>
+                </div>
                 {%- endfor %}
-            </ul>
+            </div>
+            <aside class="skill-details" id="skill-details" aria-live="polite">
+                <p class="skill-details-prompt">Click a skill to see the projects and experience where I've used it.</p>
+                {{- details }}
+            </aside>
         </div>
-        {%- endfor %}
     </section>
     {%- endif -%}
 
@@ -140,6 +193,33 @@ layout: default
 </div>
 
 <script>
+    // Clicking a skill tile shows its detail panel; clicking it again goes back to the prompt
+    (function () {
+        var panel = document.getElementById('skill-details');
+        if (!panel) return;
+        var prompt = panel.querySelector('.skill-details-prompt');
+        var selected = null;
+
+        function select(button) {
+            if (selected) {
+                selected.setAttribute('aria-pressed', 'false');
+                document.getElementById(selected.dataset.skill).hidden = true;
+            }
+            selected = (button === selected) ? null : button;
+            prompt.hidden = !!selected;
+            if (!selected) return;
+            selected.setAttribute('aria-pressed', 'true');
+            document.getElementById(selected.dataset.skill).hidden = false;
+            // When the panel is stacked below the skills (small screens), bring it into view
+            var rect = panel.getBoundingClientRect();
+            if (rect.top > window.innerHeight || rect.bottom < 0) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        document.querySelectorAll('.skill[data-skill]').forEach(function (button) {
+            button.addEventListener('click', function () { select(button); });
+        });
+    })();
+
     // If an icon fails to load (bad path, offline CDN), swap in a tile with the item's first letter
     (function () {
         function fallback(img) {
