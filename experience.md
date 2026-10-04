@@ -32,6 +32,18 @@ experience:
       - text: "Evaluated several agent frameworks on metrics like token efficiency, extensibility, and reliability, then configured one for a developer portal"
         children:
           - "Built custom skills, plugins, and a RAG system for document retrieval, then tested the agent on a variety of use cases"
+    skills_used:
+      - Python
+      - PostgreSQL
+      - Git
+      - Docker
+      - Jira
+      - GitHub
+      - Hermes
+      - OpenClaw
+      - Claude Code
+      - NemoClaw
+      - OpenCode
 
   - company: Math Altitude School of Mathematics
     url: https://www.mathaltitude.com/
@@ -54,6 +66,23 @@ education:
     bullets:
       - "Cumulative GPA: 4.0/4.0; Dean’s List all semesters"
       - "Notable courses: Software Engineering, Computer Networks, Database Systems, Object-Oriented Analysis and Design, Distributed Computer Systems, Algorithms, Operating Systems, Computational Engineering"
+    skills_used:
+      - JavaScript
+      - TypeScript
+      - Python
+      - Java
+      - C
+      - C++
+      - SQL
+      - HTML
+      - CSS
+      - PHP
+      - LaTeX
+      - Oracle
+      - MySQL
+      - Linux
+      - SSH
+      - Docker
 
   - school: DeepLearning.AI, Stanford University
     url: https://www.deeplearning.ai/
@@ -63,6 +92,9 @@ education:
     dates: March 2025 – May 2025
     bullets:
       - "Topics: Regression, Classification, Neural Networks, Decision Trees, Recommender Systems, Reinforcement Learning"
+    skills_used:
+      - Python
+      - Git
 
   - school: Doherty Memorial High School
     icon: /assets/icons/doherty.png
@@ -86,6 +118,10 @@ projects:
       - "Surveyed 50+ prospective users and conducted follow-up interviews, then used findings to inform website design"
       - "Facilitated numerous user testing sessions, then translated user feedback into design and functionality changes"
       - "Led regular stakeholder meetings to communicate project progress and keep technical delivery aligned with business goals"
+    skills_used:
+      - PHP
+      - MariaDB
+      - Git
 
   - name: ShopComp — A receipt sharing platform to help you find the best deals
     url: /projects/shopcomp
@@ -98,6 +134,22 @@ projects:
       - "Implemented CI/CD scripts to enable automated builds and deployments"
       - "Implemented user authentication with AWS Cognito, secured API Gateway endpoints with a Cognito Authorizer, then built a React login and account creation page"
       - "Coordinated regular team meetings, tracked project progress, and guided team members to ensure milestones were met"
+    skills_used:
+      - JavaScript
+      - TypeScript
+      - SQL
+      - HTML
+      - CSS
+      - name: AWS
+        note: "Deployed a RESTful API with the CDK, API Gateway, and Lambda; added user authentication with Cognito"
+      - name: React
+        note: "Built the login and account creation pages"
+      - Next.js
+      - name: MySQL
+        note: "Database hosted on Aurora/RDS"
+      - Git
+      - name: GitHub
+        note: "Hosted the frontend and backend repositories"
 
   - name: Greendale Youth Flag Football Registration Website
     icon: /assets/icons/gyffl.jpg
@@ -111,7 +163,13 @@ projects:
       - "Online registration process saves 100's of hours per year of manual registration management"
 
 # Skill icons: `icon` is a devicon name (https://devicon.dev), a full URL, or a /local/path.svg.
-# Tiles without a `url` are not clickable; tiles without an `icon` show a letter.
+# Tiles without an `icon` show a letter. Clicking a tile lists the entries above whose `skills_used`
+# names that skill (matched by name, case-insensitive), e.g.
+#   skills_used:
+#     - Python                      # just the name
+#     - name: AWS                   # or a name plus a short note about how you used it
+#       note: "Deployed a REST API with the CDK"
+# `url` becomes a "Learn more" link in that panel.
 skills:
   - category: Programming Languages
     items:
@@ -153,15 +211,18 @@ skills:
 
   - category: Databases
     items:
+      - name: PostgreSQL
+        url: https://www.postgresql.org/
+        icon: postgresql
       - name: Oracle
         url: https://www.oracle.com/database/
         icon: oracle
       - name: MySQL
         url: https://www.mysql.com/
         icon: mysql
-      - name: PostgreSQL
-        url: https://www.postgresql.org/
-        icon: postgresql
+      - name: MariaDB
+        url: https://mariadb.org/
+        icon: mariadb
 
   - category: Dev Tools
     items:
@@ -185,7 +246,7 @@ skills:
         icon: jira
       - name: GitHub
         url: https://github.com
-        icon: /assets/icons/github.png
+        icon: github
 
   - category: AI Agents
     items:
@@ -209,10 +270,10 @@ skills:
     items:
       - name: React
         url: https://react.dev/
-        icon: /assets/icons/react.png
+        icon: react
       - name: Next.js
         url: https://nextjs.org/
-        icon: /assets/icons/nextjs.jpg
+        icon: nextjs
 
   - category: Cloud Computing
     items:
